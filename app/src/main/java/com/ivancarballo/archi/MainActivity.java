@@ -43,17 +43,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         githubService = GithubService.Factory.create();
-
         progressBar = (ProgressBar) findViewById(R.id.progress);
         infoTextView = (TextView) findViewById(R.id.text_info);
+        //Set up ToolBar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Set up RecyclerView
         reposRecycleView = (RecyclerView) findViewById(R.id.repos_recycler_view);
-        reposRecycleView.setAdapter(new RepositoryAdapter());
-        reposRecycleView.setLayoutManager(new LinearLayoutManager(this));
-
+        setupRecyclerView(reposRecycleView);
+        //Set up username EditText
         editTextUsername = (EditText) findViewById(R.id.edit_text_username);
         editTextUsername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -117,6 +116,18 @@ public class MainActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        RepositoryAdapter adapter = new RepositoryAdapter();
+        adapter.setCallback(new RepositoryAdapter.Callback() {
+            @Override
+            public void onItemClick(Repository repository) {
+                startActivity(RepositoryActivity.newIntent(MainActivity.this, repository));
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void hideSoftKeyboard() {

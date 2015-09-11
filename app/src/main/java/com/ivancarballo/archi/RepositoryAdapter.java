@@ -15,6 +15,7 @@ import java.util.List;
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder> {
 
     private List<Repository> repositories;
+    private Callback callback;
 
     public RepositoryAdapter() {
         this.repositories = Collections.emptyList();
@@ -28,17 +29,31 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
         this.repositories = repositories;
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
     @Override
     public RepositoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_repo, parent, false);
-        return new RepositoryViewHolder(itemView);
+        final RepositoryViewHolder viewHolder = new RepositoryViewHolder(itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (callback != null) {
+                    callback.onItemClick(viewHolder.repository);
+                }
+            }
+        });
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RepositoryViewHolder holder, int position) {
         Repository repository = repositories.get(position);
         Context context = holder.titleTextView.getContext();
+        holder.repository = repository;
         holder.titleTextView.setText(repository.name);
         holder.descriptionTextView.setText(repository.description);
         holder.watchersTextView.setText(
@@ -60,6 +75,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
         public TextView watchersTextView;
         public TextView starsTextView;
         public TextView forksTextView;
+        public Repository repository;
 
         public RepositoryViewHolder(View itemView) {
             super(itemView);
@@ -69,5 +85,9 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
             starsTextView = (TextView) itemView.findViewById(R.id.text_stars);
             forksTextView = (TextView) itemView.findViewById(R.id.text_forks);
         }
+    }
+
+    public interface Callback {
+        void onItemClick(Repository repository);
     }
 }
