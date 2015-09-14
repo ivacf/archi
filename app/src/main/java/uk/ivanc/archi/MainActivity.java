@@ -1,4 +1,4 @@
-package com.ivancarballo.archi;
+package uk.ivanc.archi;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.ivancarballo.archi.model.GithubService;
-import com.ivancarballo.archi.model.Repository;
 
 import java.util.List;
 

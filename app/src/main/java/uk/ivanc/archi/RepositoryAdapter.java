@@ -1,4 +1,4 @@
-package com.ivancarballo.archi;
+package uk.ivanc.archi;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.ivancarballo.archi.model.Repository;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +36,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
         final View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_repo, parent, false);
         final RepositoryViewHolder viewHolder = new RepositoryViewHolder(itemView);
-        itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.contentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callback != null) {
@@ -70,6 +68,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
     }
 
     public static class RepositoryViewHolder extends RecyclerView.ViewHolder {
+        public View contentLayout;
         public TextView titleTextView;
         public TextView descriptionTextView;
         public TextView watchersTextView;
@@ -79,6 +78,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
 
         public RepositoryViewHolder(View itemView) {
             super(itemView);
+            contentLayout = itemView.findViewById(R.id.layout_content);
             titleTextView = (TextView) itemView.findViewById(R.id.text_repo_title);
             descriptionTextView = (TextView) itemView.findViewById(R.id.text_repo_description);
             watchersTextView = (TextView) itemView.findViewById(R.id.text_watchers);

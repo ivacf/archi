@@ -11,4 +11,6 @@
     <string name="error_username_not_found">Oops, Octocat doesn\'t know that username</string>
     <string name="hit_username">GitHub username</string>
     <string name="default_info_message">Enter a GitHub username above to see its repositories</string>
+    <string name="text_fork">This repository is a fork</string>
+    <string name="text_language">Language: %s</string>
 </resources>

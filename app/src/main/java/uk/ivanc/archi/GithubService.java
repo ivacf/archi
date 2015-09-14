@@ -1,4 +1,4 @@
-package com.ivancarballo.archi.model;
+package uk.ivanc.archi;
 
 import java.util.List;
 

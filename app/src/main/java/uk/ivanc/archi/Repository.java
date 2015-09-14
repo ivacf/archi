@@ -1,4 +1,4 @@
-package com.ivancarballo.archi.model;
+package uk.ivanc.archi;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -16,6 +16,19 @@ public class Repository implements Parcelable {
     public String language;
     public String homepage;
     public Owner owner;
+    public boolean fork;
+
+    public boolean hasHomepage() {
+        return homepage != null && !homepage.isEmpty();
+    }
+
+    public boolean hasLanguage() {
+        return language != null && !language.isEmpty();
+    }
+
+    public boolean isFork() {
+        return fork;
+    }
 
     @Override
     public int describeContents() {
@@ -33,6 +46,7 @@ public class Repository implements Parcelable {
         dest.writeString(this.language);
         dest.writeString(this.homepage);
         dest.writeParcelable(this.owner, 0);
+        dest.writeByte(fork ? (byte) 1 : (byte) 0);
     }
 
     public Repository() {
@@ -48,9 +62,10 @@ public class Repository implements Parcelable {
         this.language = in.readString();
         this.homepage = in.readString();
         this.owner = in.readParcelable(Owner.class.getClassLoader());
+        this.fork = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<Repository> CREATOR = new Parcelable.Creator<Repository>() {
+    public static final Creator<Repository> CREATOR = new Creator<Repository>() {
         public Repository createFromParcel(Parcel source) {
             return new Repository(source);
         }
