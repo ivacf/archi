@@ -1,4 +1,4 @@
-package uk.ivanc.archi;
+package uk.ivanc.archimvp.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ivanc.archi.model.Repository;
+import uk.ivanc.archimvp.R;
+import uk.ivanc.archimvp.model.Repository;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder> {
 

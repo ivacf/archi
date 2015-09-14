@@ -1,12 +1,11 @@
-package uk.ivanc.archi;
+package uk.ivanc.archimvp.view;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,20 +16,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import retrofit.HttpException;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import uk.ivanc.archi.model.GithubService;
-import uk.ivanc.archi.model.Repository;
+import uk.ivanc.archimvp.R;
+import uk.ivanc.archimvp.model.Repository;
+import uk.ivanc.archimvp.presenter.MainPresenter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private MainPresenter presenter;
 
-    private GithubService githubService;
-    private Subscription subscription;
     private RecyclerView reposRecycleView;
     private Toolbar toolbar;
     private EditText editTextUsername;
@@ -40,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Set up presenter
+        presenter = new MainPresenter();
+        presenter.attachView(this);
+
         setContentView(R.layout.activity_main);
-        githubService = GithubService.Factory.create();
         progressBar = (ProgressBar) findViewById(R.id.progress);
         infoTextView = (TextView) findViewById(R.id.text_info);
         //Set up ToolBar
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String username = editTextUsername.getText().toString();
-                    if (username.length() > 0) loadGithubRepos(username);
+                    if (username.length() > 0) presenter.loadRepositories(username);
                     return true;
                 }
                 return false;
@@ -67,54 +63,42 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        presenter.detachView();
         super.onDestroy();
-        if (subscription != null) subscription.unsubscribe();
     }
 
-    public void loadGithubRepos(String username) {
+    public void onLoading() {
         progressBar.setVisibility(View.VISIBLE);
         reposRecycleView.setVisibility(View.GONE);
         infoTextView.setVisibility(View.GONE);
-        GithubService githubService = ArchiApplication.get(this).getGithubService();
-        subscription = githubService.publicRepositories(username)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Repository>>() {
-                    @Override
-                    public void onCompleted() {
-                        progressBar.setVisibility(View.GONE);
-                        if (reposRecycleView.getAdapter().getItemCount() > 0) {
-                            reposRecycleView.requestFocus();
-                            hideSoftKeyboard();
-                            reposRecycleView.setVisibility(View.VISIBLE);
-                        } else {
-                            infoTextView.setText(R.string.text_empty_repos);
-                            infoTextView.setVisibility(View.VISIBLE);
-                        }
-                    }
+    }
 
-                    @Override
-                    public void onError(Throwable error) {
-                        Log.e(TAG, "Error loading GitHub repos ", error);
-                        progressBar.setVisibility(View.GONE);
-                        if (error instanceof HttpException
-                                && ((HttpException) error).code() == 404) {
-                            infoTextView.setText(R.string.error_username_not_found);
-                        } else {
-                            infoTextView.setText(R.string.error_loading_repos);
-                        }
-                        infoTextView.setVisibility(View.VISIBLE);
-                    }
+    public void onRepositoriesLoaded(List<Repository> repositories) {
+        progressBar.setVisibility(View.GONE);
+        if (!repositories.isEmpty()) {
+            RepositoryAdapter adapter =
+                    (RepositoryAdapter) reposRecycleView.getAdapter();
+            adapter.setRepositories(repositories);
+            adapter.notifyDataSetChanged();
+            reposRecycleView.requestFocus();
+            hideSoftKeyboard();
+            reposRecycleView.setVisibility(View.VISIBLE);
+        } else {
+            infoTextView.setText(R.string.text_empty_repos);
+            infoTextView.setVisibility(View.VISIBLE);
+        }
+    }
 
-                    @Override
-                    public void onNext(List<Repository> repositories) {
-                        Log.i(TAG, "Repos loaded " + repositories);
-                        RepositoryAdapter adapter =
-                                (RepositoryAdapter) reposRecycleView.getAdapter();
-                        adapter.setRepositories(repositories);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+    public void onUsernameNotFound() {
+        progressBar.setVisibility(View.GONE);
+        infoTextView.setText(R.string.error_username_not_found);
+        infoTextView.setVisibility(View.VISIBLE);
+    }
+
+    public void onError() {
+        progressBar.setVisibility(View.GONE);
+        infoTextView.setText(R.string.error_loading_repos);
+        infoTextView.setVisibility(View.VISIBLE);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {

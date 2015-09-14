@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
+
+    defaultConfig {
+        applicationId "uk.ivanc.archimvp"
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    Map<String, String> dependencies = rootProject.ext.dependencies;
+
+    compile dependencies.appCompat
+    compile dependencies.cardView
+    compile dependencies.recyclerView
+    compile dependencies.retrofit
+    compile dependencies.retrofitConverterGson
+    compile dependencies.retrofitAdapterRxJava
+    compile dependencies.picasso
+    compile dependencies.rxAndroid
+    compile dependencies.circleImageView
+}

@@ -1,4 +1,4 @@
-package uk.ivanc.archi;
+package uk.ivanc.archimvp.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,28 +6,18 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import uk.ivanc.archi.model.GithubService;
-import uk.ivanc.archi.model.Repository;
-import uk.ivanc.archi.model.User;
+import uk.ivanc.archimvp.R;
+import uk.ivanc.archimvp.model.Repository;
 
 public class RepositoryActivity extends AppCompatActivity {
 
     private static final String EXTRA_REPOSITORY = "EXTRA_REPOSITORY";
-    private static final String TAG = "RepositoryActivity";
-
-    private GithubService githubService;
 
     private Toolbar toolbar;
     private TextView descriptionText;
@@ -63,7 +53,6 @@ public class RepositoryActivity extends AppCompatActivity {
 
         Repository repository = getIntent().getParcelableExtra(EXTRA_REPOSITORY);
         bindData(repository);
-        loadFullUser(repository.owner.url);
     }
 
 
@@ -80,21 +69,5 @@ public class RepositoryActivity extends AppCompatActivity {
                 .load(repository.owner.avatarUrl)
                 .placeholder(R.drawable.placeholder)
                 .into(ownerImage);
-    }
-
-
-    private void loadFullUser(String url) {
-        GithubService githubService = ArchiApplication.get(this).getGithubService();
-        githubService.userFromUrl(url)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Action1<User>() {
-                    @Override
-                    public void call(User user) {
-                        Log.i(TAG, "Full user data loaded " + user);
-                        ownerText.setText(user.name);
-
-                    }
-                });
     }
 }

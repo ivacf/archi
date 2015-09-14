@@ -1,4 +1,4 @@
-package uk.ivanc.archi;
+package uk.ivanc.archimvp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -32,7 +32,7 @@ public class Owner implements Parcelable {
         this.avatarUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
+    public static final Creator<Owner> CREATOR = new Creator<Owner>() {
         public Owner createFromParcel(Parcel source) {
             return new Owner(source);
         }

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uk.ivanc.archi">
+    package="uk.ivanc.archimvp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".ArchiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop">
@@ -23,9 +22,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RepositoryActivity"
+            android:name=".view.RepositoryActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".view.MainActivity"/>
     </application>
 
 </manifest>
