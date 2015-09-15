@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import uk.ivanc.archimvp.R;
+import uk.ivanc.archimvp.RepositoryAdapter;
 import uk.ivanc.archimvp.model.Repository;
 import uk.ivanc.archimvp.presenter.MainPresenter;
 
