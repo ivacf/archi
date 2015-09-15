@@ -10,6 +10,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import uk.ivanc.archimvp.ArchiApplication;
+import uk.ivanc.archimvp.R;
 import uk.ivanc.archimvp.view.MainActivity;
 import uk.ivanc.archimvp.model.GithubService;
 import uk.ivanc.archimvp.model.Repository;
@@ -33,8 +34,11 @@ public class MainPresenter implements Presenter<MainActivity> {
         if (subscription != null) subscription.unsubscribe();
     }
 
-    public void loadRepositories(String username) {
-        mainActivity.onLoading();
+    public void loadRepositories(String usernameEntered) {
+        String username = usernameEntered.trim();
+        if (username.isEmpty()) return;
+
+        mainActivity.showProgressIndicator();
         if (subscription != null) subscription.unsubscribe();
         GithubService githubService = ArchiApplication.get(mainActivity).getGithubService();
         subscription = githubService.publicRepositories(username)
@@ -44,16 +48,20 @@ public class MainPresenter implements Presenter<MainActivity> {
                     @Override
                     public void onCompleted() {
                         Log.i(TAG, "Repos loaded " + repositories);
-                        mainActivity.onRepositoriesLoaded(repositories);
+                        if (!repositories.isEmpty()) {
+                            mainActivity.showRepositories(repositories);
+                        } else {
+                            mainActivity.showMessage(R.string.text_empty_repos);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable error) {
                         Log.e(TAG, "Error loading GitHub repos ", error);
                         if (isHttp404(error)) {
-                            mainActivity.onUsernameNotFound();
+                            mainActivity.showMessage(R.string.error_username_not_found);
                         } else {
-                            mainActivity.onError();
+                            mainActivity.showMessage(R.string.error_loading_repos);
                         }
                     }
 

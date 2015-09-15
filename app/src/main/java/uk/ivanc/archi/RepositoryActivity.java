@@ -38,6 +38,7 @@ public class RepositoryActivity extends AppCompatActivity {
     private ImageView ownerImage;
     private View ownerLayout;
 
+    private Subscription subscription;
 
     public static Intent newIntent(Context context, Repository repository) {
         Intent intent = new Intent(context, RepositoryActivity.class);
@@ -71,6 +72,11 @@ public class RepositoryActivity extends AppCompatActivity {
         loadFullUser(repository.owner.url);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscription != null) subscription.unsubscribe();
+    }
 
     private void bindRepositoryData(final Repository repository) {
         setTitle(repository.name);
@@ -98,7 +104,7 @@ public class RepositoryActivity extends AppCompatActivity {
 
     private void loadFullUser(String url) {
         GithubService githubService = ArchiApplication.get(this).getGithubService();
-        githubService.userFromUrl(url)
+        subscription = githubService.userFromUrl(url)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<User>() {

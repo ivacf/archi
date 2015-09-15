@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String username = editTextUsername.getText().toString();
-                    if (username.length() > 0) presenter.loadRepositories(username);
+                    presenter.loadRepositories(editTextUsername.getText().toString());
                     return true;
                 }
                 return false;
@@ -67,38 +66,28 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void onLoading() {
+    public void showRepositories(List<Repository> repositories) {
+        RepositoryAdapter adapter = (RepositoryAdapter) reposRecycleView.getAdapter();
+        adapter.setRepositories(repositories);
+        adapter.notifyDataSetChanged();
+        reposRecycleView.requestFocus();
+        hideSoftKeyboard();
+        progressBar.setVisibility(View.INVISIBLE);
+        infoTextView.setVisibility(View.INVISIBLE);
+        reposRecycleView.setVisibility(View.VISIBLE);
+    }
+
+    public void showMessage(int stringId) {
+        progressBar.setVisibility(View.INVISIBLE);
+        infoTextView.setVisibility(View.VISIBLE);
+        reposRecycleView.setVisibility(View.INVISIBLE);
+        infoTextView.setText(getString(stringId));
+    }
+
+    public void showProgressIndicator() {
         progressBar.setVisibility(View.VISIBLE);
-        reposRecycleView.setVisibility(View.GONE);
-        infoTextView.setVisibility(View.GONE);
-    }
-
-    public void onRepositoriesLoaded(List<Repository> repositories) {
-        progressBar.setVisibility(View.GONE);
-        if (!repositories.isEmpty()) {
-            RepositoryAdapter adapter =
-                    (RepositoryAdapter) reposRecycleView.getAdapter();
-            adapter.setRepositories(repositories);
-            adapter.notifyDataSetChanged();
-            reposRecycleView.requestFocus();
-            hideSoftKeyboard();
-            reposRecycleView.setVisibility(View.VISIBLE);
-        } else {
-            infoTextView.setText(R.string.text_empty_repos);
-            infoTextView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void onUsernameNotFound() {
-        progressBar.setVisibility(View.GONE);
-        infoTextView.setText(R.string.error_username_not_found);
-        infoTextView.setVisibility(View.VISIBLE);
-    }
-
-    public void onError() {
-        progressBar.setVisibility(View.GONE);
-        infoTextView.setText(R.string.error_loading_repos);
-        infoTextView.setVisibility(View.VISIBLE);
+        infoTextView.setVisibility(View.INVISIBLE);
+        reposRecycleView.setVisibility(View.INVISIBLE);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
