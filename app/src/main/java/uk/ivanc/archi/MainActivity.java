@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private GithubService githubService;
     private Subscription subscription;
     private RecyclerView reposRecycleView;
     private Toolbar toolbar;
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        githubService = GithubService.Factory.create();
         progressBar = (ProgressBar) findViewById(R.id.progress);
         infoTextView = (TextView) findViewById(R.id.text_info);
         //Set up ToolBar

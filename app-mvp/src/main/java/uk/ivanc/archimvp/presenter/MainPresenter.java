@@ -9,6 +9,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import uk.ivanc.archimvp.ArchiApplication;
 import uk.ivanc.archimvp.view.MainActivity;
 import uk.ivanc.archimvp.model.GithubService;
 import uk.ivanc.archimvp.model.Repository;
@@ -17,14 +18,9 @@ public class MainPresenter implements Presenter<MainActivity> {
 
     public static String TAG = "MainPresenter";
 
-    private GithubService githubService;
     private MainActivity mainActivity;
     private Subscription subscription;
     private List<Repository> repositories;
-
-    public MainPresenter() {
-        githubService = GithubService.Factory.create();
-    }
 
     @Override
     public void attachView(MainActivity view) {
@@ -40,6 +36,7 @@ public class MainPresenter implements Presenter<MainActivity> {
     public void loadRepositories(String username) {
         mainActivity.onLoading();
         if (subscription != null) subscription.unsubscribe();
+        GithubService githubService = ArchiApplication.get(mainActivity).getGithubService();
         subscription = githubService.publicRepositories(username)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

@@ -15,8 +15,11 @@ public class Repository implements Parcelable {
     public int starts;
     public String language;
     public String homepage;
-    public Owner owner;
+    public User owner;
     public boolean fork;
+
+    public Repository() {
+    }
 
     public boolean hasHomepage() {
         return homepage != null && !homepage.isEmpty();
@@ -49,9 +52,6 @@ public class Repository implements Parcelable {
         dest.writeByte(fork ? (byte) 1 : (byte) 0);
     }
 
-    public Repository() {
-    }
-
     protected Repository(Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
@@ -61,7 +61,7 @@ public class Repository implements Parcelable {
         this.starts = in.readInt();
         this.language = in.readString();
         this.homepage = in.readString();
-        this.owner = in.readParcelable(Owner.class.getClassLoader());
+        this.owner = in.readParcelable(User.class.getClassLoader());
         this.fork = in.readByte() != 0;
     }
 
@@ -74,4 +74,42 @@ public class Repository implements Parcelable {
             return new Repository[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Repository that = (Repository) o;
+
+        if (id != that.id) return false;
+        if (forks != that.forks) return false;
+        if (watchers != that.watchers) return false;
+        if (starts != that.starts) return false;
+        if (fork != that.fork) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null)
+            return false;
+        if (language != null ? !language.equals(that.language) : that.language != null)
+            return false;
+        if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null)
+            return false;
+        return !(owner != null ? !owner.equals(that.owner) : that.owner != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + forks;
+        result = 31 * result + watchers;
+        result = 31 * result + starts;
+        result = 31 * result + (language != null ? language.hashCode() : 0);
+        result = 31 * result + (homepage != null ? homepage.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (fork ? 1 : 0);
+        return result;
+    }
 }
