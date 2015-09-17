@@ -1,0 +1,95 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="uk.ivanc.archimvvm.viewmodel.MainViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/very_light_grey"
+        tools:context=".MainActivity">
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/octocat" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <RelativeLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:background="?attr/colorPrimary"
+            android:paddingBottom="20dp"
+            android:paddingLeft="@dimen/vertical_margin"
+            android:paddingRight="@dimen/vertical_margin">
+
+            <EditText
+                android:id="@+id/edit_text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hit_username"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:onEditorAction="@{viewModel.onSearchAction}"
+                android:textColor="@color/white"
+                android:theme="@style/LightEditText" />
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_search"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:visibility="@{viewModel.progressVisibility}" />
+
+        <TextView
+            android:id="@+id/text_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_search"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/vertical_margin"
+            android:layout_marginRight="@dimen/vertical_margin"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@{viewModel.infoMessage}"
+            android:textColor="@color/secondary_text"
+            android:textSize="18sp"
+            android:visibility="@{viewModel.infoMessageVisibility}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/repos_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout_search"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/vertical_margin_half"
+            android:paddingTop="@dimen/vertical_margin_half"
+            android:scrollbars="vertical"
+            android:visibility="@{viewModel.recyclerViewVisibility}"
+            tools:listitem="@layout/item_repo" />
+
+    </RelativeLayout>
+
+</layout>

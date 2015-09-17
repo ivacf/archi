@@ -12,7 +12,7 @@ public class Repository implements Parcelable {
     public int forks;
     public int watchers;
     @SerializedName("stargazers_count")
-    public int starts;
+    public int stars;
     public String language;
     public String homepage;
     public User owner;
@@ -45,7 +45,7 @@ public class Repository implements Parcelable {
         dest.writeString(this.description);
         dest.writeInt(this.forks);
         dest.writeInt(this.watchers);
-        dest.writeInt(this.starts);
+        dest.writeInt(this.stars);
         dest.writeString(this.language);
         dest.writeString(this.homepage);
         dest.writeParcelable(this.owner, 0);
@@ -58,7 +58,7 @@ public class Repository implements Parcelable {
         this.description = in.readString();
         this.forks = in.readInt();
         this.watchers = in.readInt();
-        this.starts = in.readInt();
+        this.stars = in.readInt();
         this.language = in.readString();
         this.homepage = in.readString();
         this.owner = in.readParcelable(User.class.getClassLoader());
@@ -85,7 +85,7 @@ public class Repository implements Parcelable {
         if (id != that.id) return false;
         if (forks != that.forks) return false;
         if (watchers != that.watchers) return false;
-        if (starts != that.starts) return false;
+        if (stars != that.stars) return false;
         if (fork != that.fork) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null)
@@ -105,7 +105,7 @@ public class Repository implements Parcelable {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + forks;
         result = 31 * result + watchers;
-        result = 31 * result + starts;
+        result = 31 * result + stars;
         result = 31 * result + (language != null ? language.hashCode() : 0);
         result = 31 * result + (homepage != null ? homepage.hashCode() : 0);
         result = 31 * result + (owner != null ? owner.hashCode() : 0);

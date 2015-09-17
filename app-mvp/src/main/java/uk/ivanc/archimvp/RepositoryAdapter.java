@@ -59,7 +59,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
         holder.watchersTextView.setText(
                 context.getResources().getString(R.string.text_watchers, repository.watchers));
         holder.starsTextView.setText(
-                context.getResources().getString(R.string.text_stars, repository.starts));
+                context.getResources().getString(R.string.text_stars, repository.stars));
         holder.forksTextView.setText(
                 context.getResources().getString(R.string.text_forks, repository.forks));
     }

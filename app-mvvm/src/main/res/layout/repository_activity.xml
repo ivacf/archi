@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="uk.ivanc.archimvvm.viewmodel.RepositoryViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:activity=".RepositoryActivity">
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/octocat" />
+
+        <LinearLayout
+            android:id="@+id/layout_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+            <TextView
+                android:id="@+id/text_repo_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp"
+                android:text="@{viewModel.description}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="This is the description for this repository that can be fairly long" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_header"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="@{viewModel.homepage}"
+                android:textSize="16sp"
+                android:visibility="@{viewModel.homepageVisibility}"
+                tools:text="http://google.com/library" />
+
+            <TextView
+                android:id="@+id/text_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.language}"
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:visibility="@{viewModel.languageVisibility}"
+                tools:text="Language: Java" />
+
+            <TextView
+                android:id="@+id/text_fork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/text_fork"
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:visibility="@{viewModel.forkVisibility}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/divider" />
+
+            <RelativeLayout
+                android:id="@+id/layout_owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.ownerLayoutVisibility}"
+                tools:visibility="visible">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_owner"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@{viewModel.ownerImage}" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/image_owner"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/text_owner_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.ownerName}"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="16sp"
+                        tools:text="Owner Name" />
+
+                    <TextView
+                        android:id="@+id/text_owner_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@{viewModel.ownerEmail}"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.ownerEmailVisibility}"
+                        tools:text="owner@email.com" />
+
+                    <TextView
+                        android:id="@+id/text_owner_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="3dp"
+                        android:text="@{viewModel.ownerLocation}"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.ownerLocationVisibility}"
+                        tools:text="Brighton" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

@@ -1,86 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/vertical_margin_half"
-    android:layout_marginLeft="@dimen/vertical_margin"
-    android:layout_marginRight="@dimen/vertical_margin"
-    android:layout_marginTop="@dimen/vertical_margin_half"
-    card_view:cardCornerRadius="2dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/layout_content"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="uk.ivanc.archimvvm.viewmodel.ItemRepoViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackground"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_repo_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="12dp"
-            android:textSize="20sp"
-            tools:text="Repository Name" />
-
-        <TextView
-            android:id="@+id/text_repo_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="10dp"
-            android:textSize="14sp"
-            android:textColor="@color/secondary_text"
-            tools:text="This is where the repository description will go" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vertical_margin_half"
+        android:layout_marginLeft="@dimen/vertical_margin"
+        android:layout_marginRight="@dimen/vertical_margin"
+        android:layout_marginTop="@dimen/vertical_margin_half"
+        card_view:cardCornerRadius="2dp">
 
         <LinearLayout
+            android:id="@+id/layout_content"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{viewModel.onItemClick}"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_watchers"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/secondary_text"
-                tools:text="10 \nWatchers" />
+                android:id="@+id/text_repo_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:text="@{viewModel.name}"
+                android:textSize="20sp"
+                tools:text="Repository Name" />
 
             <TextView
-                android:id="@+id/text_stars"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:id="@+id/text_repo_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="12dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:text="@{viewModel.description}"
                 android:textColor="@color/secondary_text"
-                tools:text="230 \nStars" />
+                android:textSize="14sp"
+                tools:text="This is where the repository description will go" />
 
-            <TextView
-                android:id="@+id/text_forks"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/secondary_text"
-                tools:text="0 \nForks" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_watchers"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{viewModel.watchers}"
+                    android:textColor="@color/secondary_text"
+                    tools:text="10 \nWatchers" />
+
+                <TextView
+                    android:id="@+id/text_stars"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{viewModel.stars}"
+                    android:textColor="@color/secondary_text"
+                    tools:text="230 \nStars" />
+
+                <TextView
+                    android:id="@+id/text_forks"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{viewModel.forks}"
+                    android:textColor="@color/secondary_text"
+                    tools:text="0 \nForks" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
-</android.support.v7.widget.CardView>
+</layout>
