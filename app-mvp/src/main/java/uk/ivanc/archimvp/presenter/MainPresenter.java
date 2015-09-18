@@ -40,10 +40,11 @@ public class MainPresenter implements Presenter<MainActivity> {
 
         mainActivity.showProgressIndicator();
         if (subscription != null) subscription.unsubscribe();
-        GithubService githubService = ArchiApplication.get(mainActivity).getGithubService();
+        ArchiApplication application = ArchiApplication.get(mainActivity);
+        GithubService githubService = application.getGithubService();
         subscription = githubService.publicRepositories(username)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Subscriber<List<Repository>>() {
                     @Override
                     public void onCompleted() {

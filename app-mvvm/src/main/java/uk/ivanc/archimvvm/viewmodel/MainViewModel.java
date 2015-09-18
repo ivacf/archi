@@ -73,10 +73,11 @@ public class MainViewModel implements ViewModel {
         recyclerViewVisibility.set(View.INVISIBLE);
         infoMessageVisibility.set(View.INVISIBLE);
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
-        GithubService githubService = ArchiApplication.get(context).getGithubService();
+        ArchiApplication application = ArchiApplication.get(context);
+        GithubService githubService = application.getGithubService();
         subscription = githubService.publicRepositories(username)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Subscriber<List<Repository>>() {
                     @Override
                     public void onCompleted() {

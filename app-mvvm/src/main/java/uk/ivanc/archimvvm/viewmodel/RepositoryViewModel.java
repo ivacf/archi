@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 import uk.ivanc.archimvvm.ArchiApplication;
 import uk.ivanc.archimvvm.R;
 import uk.ivanc.archimvvm.model.GithubService;
@@ -49,7 +48,11 @@ public class RepositoryViewModel implements ViewModel {
         this.ownerEmailVisibility = new ObservableInt(View.VISIBLE);
         this.ownerLocationVisibility = new ObservableInt(View.VISIBLE);
         this.ownerImage = new ObservableField<>();
-        //Trigger loading the rest of the user data as soon as the view model is created
+        // Trigger loading the rest of the user data as soon as the view model is created.
+        // It's odd having to trigger this from here. Cases where accessing to the data model
+        // needs to happen because of a change in the Activity/Fragment lifecycle
+        // (i.e. an activity created) don't work very well with this MVVM pattern.
+        // It also makes this class more difficult to test. Hopefully a better solution will be found
         Picasso.with(context)
                 .load(repository.owner.avatarUrl)
                 .placeholder(R.drawable.placeholder)
@@ -88,10 +91,11 @@ public class RepositoryViewModel implements ViewModel {
     }
 
     private void loadFullUser(String url) {
-        GithubService githubService = ArchiApplication.get(context).getGithubService();
+        ArchiApplication application = ArchiApplication.get(context);
+        GithubService githubService = application.getGithubService();
         subscription = githubService.userFromUrl(url)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Action1<User>() {
                     @Override
                     public void call(User user) {

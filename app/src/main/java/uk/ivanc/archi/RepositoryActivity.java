@@ -103,10 +103,11 @@ public class RepositoryActivity extends AppCompatActivity {
 
 
     private void loadFullUser(String url) {
-        GithubService githubService = ArchiApplication.get(this).getGithubService();
+        ArchiApplication application = ArchiApplication.get(this);
+        GithubService githubService = application.getGithubService();
         subscription = githubService.userFromUrl(url)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Action1<User>() {
                     @Override
                     public void call(User user) {

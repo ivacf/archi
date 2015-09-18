@@ -73,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         reposRecycleView.setVisibility(View.GONE);
         infoTextView.setVisibility(View.GONE);
-        GithubService githubService = ArchiApplication.get(this).getGithubService();
+        ArchiApplication application = ArchiApplication.get(this);
+        GithubService githubService = application.getGithubService();
         subscription = githubService.publicRepositories(username)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Subscriber<List<Repository>>() {
                     @Override
                     public void onCompleted() {

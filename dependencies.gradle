@@ -11,6 +11,9 @@ ext {
             retrofitAdapterRxJava: "com.squareup.retrofit:adapter-rxjava:$retrofitVersion",
             picasso: 'com.squareup.picasso:picasso:2.5.2',
             rxAndroid: 'io.reactivex:rxandroid:1.0.1',
-            circleImageView: 'de.hdodenhof:circleimageview:1.3.0'
+            circleImageView: 'de.hdodenhof:circleimageview:1.3.0',
+            jUnit: 'junit:junit:4.12',
+            mockito: 'org.mockito:mockito-core:1.10.19',
+            robolectric: 'org.robolectric:robolectric:3.0'
     ]
 }

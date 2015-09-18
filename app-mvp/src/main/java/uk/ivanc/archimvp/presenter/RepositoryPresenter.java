@@ -30,10 +30,11 @@ public class RepositoryPresenter implements Presenter<RepositoryActivity> {
     }
 
     public void loadOwner(String userUrl) {
-        GithubService githubService = ArchiApplication.get(repositoryActivity).getGithubService();
+        ArchiApplication application = ArchiApplication.get(repositoryActivity);
+        GithubService githubService = application.getGithubService();
         subscription = githubService.userFromUrl(userUrl)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(application.defaultSubscribeScheduler())
                 .subscribe(new Action1<User>() {
                     @Override
                     public void call(User user) {

@@ -16,7 +16,7 @@ public class ItemRepoViewModel extends BaseObservable implements ViewModel {
     private Repository repository;
     private Context context;
 
-    public ItemRepoViewModel( Context context, Repository repository) {
+    public ItemRepoViewModel(Context context, Repository repository) {
         this.repository = repository;
         this.context = context;
     }
