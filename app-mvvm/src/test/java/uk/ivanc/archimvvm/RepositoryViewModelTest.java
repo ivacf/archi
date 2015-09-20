@@ -9,8 +9,6 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.security.acl.Owner;
-
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import uk.ivanc.archimvvm.model.GithubService;

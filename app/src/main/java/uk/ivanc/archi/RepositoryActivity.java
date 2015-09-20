@@ -13,11 +13,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 import uk.ivanc.archi.model.GithubService;
 import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archi.model.User;
