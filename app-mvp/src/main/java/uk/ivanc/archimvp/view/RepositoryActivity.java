@@ -18,7 +18,7 @@ import uk.ivanc.archimvp.model.Repository;
 import uk.ivanc.archimvp.model.User;
 import uk.ivanc.archimvp.presenter.RepositoryPresenter;
 
-public class RepositoryActivity extends AppCompatActivity {
+public class RepositoryActivity extends AppCompatActivity implements RepositoryMvpView {
 
     private static final String EXTRA_REPOSITORY = "EXTRA_REPOSITORY";
 
@@ -76,6 +76,12 @@ public class RepositoryActivity extends AppCompatActivity {
         presenter.detachView();
     }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void showOwner(final User owner) {
         ownerNameText.setText(owner.name);
         ownerEmailText.setText(owner.email);

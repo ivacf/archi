@@ -31,4 +31,8 @@ dependencies {
     compile dependencies.picasso
     compile dependencies.rxAndroid
     compile dependencies.circleImageView
+
+    testCompile dependencies.jUnit
+    testCompile dependencies.mockito
+    testCompile dependencies.robolectric
 }

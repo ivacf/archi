@@ -5,32 +5,31 @@ import android.util.Log;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 import uk.ivanc.archimvp.ArchiApplication;
 import uk.ivanc.archimvp.model.GithubService;
 import uk.ivanc.archimvp.model.User;
-import uk.ivanc.archimvp.view.RepositoryActivity;
+import uk.ivanc.archimvp.view.RepositoryMvpView;
 
-public class RepositoryPresenter implements Presenter<RepositoryActivity> {
+public class RepositoryPresenter implements Presenter<RepositoryMvpView> {
 
     private static final String TAG = "RepositoryPresenter";
 
-    private RepositoryActivity repositoryActivity;
+    private RepositoryMvpView repositoryMvpView;
     private Subscription subscription;
 
     @Override
-    public void attachView(RepositoryActivity view) {
-        this.repositoryActivity = view;
+    public void attachView(RepositoryMvpView view) {
+        this.repositoryMvpView = view;
     }
 
     @Override
     public void detachView() {
-        this.repositoryActivity = null;
+        this.repositoryMvpView = null;
         if (subscription != null) subscription.unsubscribe();
     }
 
     public void loadOwner(String userUrl) {
-        ArchiApplication application = ArchiApplication.get(repositoryActivity);
+        ArchiApplication application = ArchiApplication.get(repositoryMvpView.getContext());
         GithubService githubService = application.getGithubService();
         subscription = githubService.userFromUrl(userUrl)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -39,7 +38,7 @@ public class RepositoryPresenter implements Presenter<RepositoryActivity> {
                     @Override
                     public void call(User user) {
                         Log.i(TAG, "Full user data loaded " + user);
-                        repositoryActivity.showOwner(user);
+                        repositoryMvpView.showOwner(user);
                     }
                 });
     }

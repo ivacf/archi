@@ -21,7 +21,7 @@ import uk.ivanc.archimvp.RepositoryAdapter;
 import uk.ivanc.archimvp.model.Repository;
 import uk.ivanc.archimvp.presenter.MainPresenter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainMvpView {
 
     private MainPresenter presenter;
 
@@ -61,12 +61,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // MainMvpView interface methods implementation
+
     @Override
     protected void onDestroy() {
         presenter.detachView();
         super.onDestroy();
     }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
     public void showRepositories(List<Repository> repositories) {
         RepositoryAdapter adapter = (RepositoryAdapter) reposRecycleView.getAdapter();
         adapter.setRepositories(repositories);
@@ -78,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         reposRecycleView.setVisibility(View.VISIBLE);
     }
 
+    @Override
     public void showMessage(int stringId) {
         progressBar.setVisibility(View.INVISIBLE);
         infoTextView.setVisibility(View.VISIBLE);
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         infoTextView.setText(getString(stringId));
     }
 
+    @Override
     public void showProgressIndicator() {
         progressBar.setVisibility(View.VISIBLE);
         infoTextView.setVisibility(View.INVISIBLE);

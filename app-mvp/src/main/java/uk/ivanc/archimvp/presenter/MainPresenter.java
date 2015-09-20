@@ -14,23 +14,24 @@ import uk.ivanc.archimvp.R;
 import uk.ivanc.archimvp.view.MainActivity;
 import uk.ivanc.archimvp.model.GithubService;
 import uk.ivanc.archimvp.model.Repository;
+import uk.ivanc.archimvp.view.MainMvpView;
 
-public class MainPresenter implements Presenter<MainActivity> {
+public class MainPresenter implements Presenter<MainMvpView> {
 
     public static String TAG = "MainPresenter";
 
-    private MainActivity mainActivity;
+    private MainMvpView mainMvpView;
     private Subscription subscription;
     private List<Repository> repositories;
 
     @Override
-    public void attachView(MainActivity view) {
-        this.mainActivity = view;
+    public void attachView(MainMvpView view) {
+        this.mainMvpView = view;
     }
 
     @Override
     public void detachView() {
-        this.mainActivity = null;
+        this.mainMvpView = null;
         if (subscription != null) subscription.unsubscribe();
     }
 
@@ -38,9 +39,9 @@ public class MainPresenter implements Presenter<MainActivity> {
         String username = usernameEntered.trim();
         if (username.isEmpty()) return;
 
-        mainActivity.showProgressIndicator();
+        mainMvpView.showProgressIndicator();
         if (subscription != null) subscription.unsubscribe();
-        ArchiApplication application = ArchiApplication.get(mainActivity);
+        ArchiApplication application = ArchiApplication.get(mainMvpView.getContext());
         GithubService githubService = application.getGithubService();
         subscription = githubService.publicRepositories(username)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -50,9 +51,9 @@ public class MainPresenter implements Presenter<MainActivity> {
                     public void onCompleted() {
                         Log.i(TAG, "Repos loaded " + repositories);
                         if (!repositories.isEmpty()) {
-                            mainActivity.showRepositories(repositories);
+                            mainMvpView.showRepositories(repositories);
                         } else {
-                            mainActivity.showMessage(R.string.text_empty_repos);
+                            mainMvpView.showMessage(R.string.text_empty_repos);
                         }
                     }
 
@@ -60,9 +61,9 @@ public class MainPresenter implements Presenter<MainActivity> {
                     public void onError(Throwable error) {
                         Log.e(TAG, "Error loading GitHub repos ", error);
                         if (isHttp404(error)) {
-                            mainActivity.showMessage(R.string.error_username_not_found);
+                            mainMvpView.showMessage(R.string.error_username_not_found);
                         } else {
-                            mainActivity.showMessage(R.string.error_loading_repos);
+                            mainMvpView.showMessage(R.string.error_loading_repos);
                         }
                     }
 
