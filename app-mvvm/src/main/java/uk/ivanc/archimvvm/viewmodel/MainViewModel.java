@@ -3,6 +3,8 @@ package uk.ivanc.archimvvm.viewmodel;
 import android.content.Context;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,12 +32,14 @@ public class MainViewModel implements ViewModel {
     public ObservableInt infoMessageVisibility;
     public ObservableInt progressVisibility;
     public ObservableInt recyclerViewVisibility;
+    public ObservableInt searchButtonVisibility;
     public ObservableField<String> infoMessage;
 
     private Context context;
     private Subscription subscription;
     private List<Repository> repositories;
     private DataListener dataListener;
+    private String editTextUsernameValue;
 
     public MainViewModel(Context context, DataListener dataListener) {
         this.context = context;
@@ -43,6 +47,7 @@ public class MainViewModel implements ViewModel {
         infoMessageVisibility = new ObservableInt(View.VISIBLE);
         progressVisibility = new ObservableInt(View.INVISIBLE);
         recyclerViewVisibility = new ObservableInt(View.INVISIBLE);
+        searchButtonVisibility = new ObservableInt(View.GONE);
         infoMessage = new ObservableField<>(context.getString(R.string.default_info_message));
     }
 
@@ -65,6 +70,30 @@ public class MainViewModel implements ViewModel {
             return true;
         }
         return false;
+    }
+
+    public void onClickSearch(View view) {
+        loadGithubRepos(editTextUsernameValue);
+    }
+
+    public TextWatcher getUsernameEditTextWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                editTextUsernameValue = charSequence.toString();
+                searchButtonVisibility.set(charSequence.length() > 0 ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
     }
 
     private void loadGithubRepos(String username) {

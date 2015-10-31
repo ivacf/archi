@@ -1,11 +1,12 @@
 package uk.ivanc.archimvvm.viewmodel;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +18,6 @@ import uk.ivanc.archimvvm.R;
 import uk.ivanc.archimvvm.model.GithubService;
 import uk.ivanc.archimvvm.model.Repository;
 import uk.ivanc.archimvvm.model.User;
-import uk.ivanc.archimvvm.util.BindableFieldTarget;
 
 /**
  * ViewModel for the RepositoryActivity
@@ -36,7 +36,6 @@ public class RepositoryViewModel implements ViewModel {
     public ObservableInt ownerEmailVisibility;
     public ObservableInt ownerLocationVisibility;
     public ObservableInt ownerLayoutVisibility;
-    public ObservableField<Drawable> ownerImage;
 
     public RepositoryViewModel(Context context, final Repository repository) {
         this.repository = repository;
@@ -47,16 +46,11 @@ public class RepositoryViewModel implements ViewModel {
         this.ownerLayoutVisibility = new ObservableInt(View.INVISIBLE);
         this.ownerEmailVisibility = new ObservableInt(View.VISIBLE);
         this.ownerLocationVisibility = new ObservableInt(View.VISIBLE);
-        this.ownerImage = new ObservableField<>();
         // Trigger loading the rest of the user data as soon as the view model is created.
         // It's odd having to trigger this from here. Cases where accessing to the data model
         // needs to happen because of a change in the Activity/Fragment lifecycle
         // (i.e. an activity created) don't work very well with this MVVM pattern.
         // It also makes this class more difficult to test. Hopefully a better solution will be found
-        Picasso.with(context)
-                .load(repository.owner.avatarUrl)
-                .placeholder(R.drawable.placeholder)
-                .into(new BindableFieldTarget(ownerImage, context.getResources()));
         loadFullUser(repository.owner.url);
     }
 
@@ -84,10 +78,22 @@ public class RepositoryViewModel implements ViewModel {
         return repository.isFork() ? View.VISIBLE : View.GONE;
     }
 
+    public String getOwnerAvatarUrl() {
+        return repository.owner.avatarUrl;
+    }
+
     @Override
     public void destroy() {
         this.context = null;
         if (subscription != null && !subscription.isUnsubscribed()) subscription.unsubscribe();
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Picasso.with(view.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .into(view);
     }
 
     private void loadFullUser(String url) {

@@ -113,7 +113,7 @@
                     android:id="@+id/image_owner"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:src="@{viewModel.ownerImage}" />
+                    app:imageUrl="@{viewModel.ownerAvatarUrl}" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

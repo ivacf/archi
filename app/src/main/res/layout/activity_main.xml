@@ -27,20 +27,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
+        android:animateLayoutChanges="true"
         android:background="?attr/colorPrimary"
         android:paddingBottom="20dp"
         android:paddingLeft="@dimen/vertical_margin"
-        android:paddingRight="@dimen/vertical_margin">
+        android:paddingRight="@dimen/vertical_margin"
+        android:paddingTop="10dp">
+
+        <ImageButton
+            android:id="@+id/button_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_search_white_36dp"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
         <EditText
             android:id="@+id/edit_text_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/button_search"
             android:hint="@string/hit_username"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:textColor="@color/white"
-            android:theme="@style/LightEditText" />
+            android:theme="@style/LightEditText"/>
 
     </RelativeLayout>
 
