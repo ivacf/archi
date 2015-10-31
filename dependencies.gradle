@@ -1,6 +1,6 @@
 ext {
-    supportLibraryVersion = '23.0.1'
-    retrofitVersion = '2.0.0-beta1'
+    supportLibraryVersion = '23.1.0'
+    retrofitVersion = '2.0.0-beta2'
 
     dependencies = [
             appCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
