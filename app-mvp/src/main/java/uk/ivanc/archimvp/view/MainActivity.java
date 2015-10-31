@@ -6,11 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     private EditText editTextUsername;
     private ProgressBar progressBar;
     private TextView infoTextView;
+    private ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,17 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         //Set up RecyclerView
         reposRecycleView = (RecyclerView) findViewById(R.id.repos_recycler_view);
         setupRecyclerView(reposRecycleView);
+        // Set up search button
+        searchButton = (ImageButton) findViewById(R.id.button_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.loadRepositories(editTextUsername.getText().toString());
+            }
+        });
         //Set up username EditText
         editTextUsername = (EditText) findViewById(R.id.edit_text_username);
+        editTextUsername.addTextChangedListener(mHideShowButtonTextWatcher);
         editTextUsername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -117,5 +130,22 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextUsername.getWindowToken(), 0);
     }
+
+    private TextWatcher mHideShowButtonTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+            searchButton.setVisibility(charSequence.length() > 0 ? View.VISIBLE : View.GONE);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
 }
