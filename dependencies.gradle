@@ -1,16 +1,16 @@
 ext {
-    supportLibraryVersion = '23.1.1'
-    retrofitVersion = '2.0.0-beta2'
+    supportLibraryVersion = '23.3.0'
+    retrofitVersion = '2.0.0'
 
     dependencies = [
             appCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
             cardView: "com.android.support:cardview-v7:$supportLibraryVersion",
             recyclerView: "com.android.support:recyclerview-v7:$supportLibraryVersion",
-            retrofit: "com.squareup.retrofit:retrofit:$retrofitVersion",
-            retrofitConverterGson: "com.squareup.retrofit:converter-gson:$retrofitVersion",
-            retrofitAdapterRxJava: "com.squareup.retrofit:adapter-rxjava:$retrofitVersion",
+            retrofit: "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitConverterGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            retrofitAdapterRxJava: "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
             picasso: 'com.squareup.picasso:picasso:2.5.2',
-            rxAndroid: 'io.reactivex:rxandroid:1.0.1',
+            rxAndroid: 'io.reactivex:rxandroid:1.1.0',
             circleImageView: 'de.hdodenhof:circleimageview:1.3.0',
             jUnit: 'junit:junit:4.12',
             mockito: 'org.mockito:mockito-core:1.10.19',
