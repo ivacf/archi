@@ -11,8 +11,9 @@ import org.robolectric.annotation.Config;
 import java.util.Collections;
 import java.util.List;
 
-import retrofit.HttpException;
-import retrofit.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import uk.ivanc.archimvp.model.GithubService;
@@ -90,7 +91,8 @@ public class MainPresenterTest {
     @Test
     public void loadRepositoriesCallsShowMessage_withUsernameNotFoundString() {
         String username = "ivacf";
-        HttpException mockHttpException = new HttpException(Response.error(404, null));
+        HttpException mockHttpException =
+                new HttpException(Response.error(404, mock(ResponseBody.class)));
         when(githubService.publicRepositories(username))
                 .thenReturn(Observable.<List<Repository>>error(mockHttpException));
 
