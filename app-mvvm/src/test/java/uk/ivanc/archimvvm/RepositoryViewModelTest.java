@@ -11,9 +11,9 @@ import org.robolectric.annotation.Config;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
-import uk.ivanc.archimvvm.model.GithubService;
-import uk.ivanc.archimvvm.model.Repository;
-import uk.ivanc.archimvvm.model.User;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.Repository;
+import uk.ivanc.archi.model.User;
 import uk.ivanc.archimvvm.util.MockModelFabric;
 import uk.ivanc.archimvvm.viewmodel.RepositoryViewModel;
 

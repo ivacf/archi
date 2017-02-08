@@ -10,8 +10,8 @@ import org.robolectric.annotation.Config;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
-import uk.ivanc.archimvp.model.GithubService;
-import uk.ivanc.archimvp.model.User;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.User;
 import uk.ivanc.archimvp.presenter.RepositoryPresenter;
 import uk.ivanc.archimvp.util.MockModelFabric;
 import uk.ivanc.archimvp.view.RepositoryMvpView;

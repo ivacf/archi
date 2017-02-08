@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ivanc.archimvp.model.Repository;
+import uk.ivanc.archi.model.Repository;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder> {
 

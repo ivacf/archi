@@ -12,7 +12,7 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import uk.ivanc.archimvvm.model.Repository;
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.viewmodel.ItemRepoViewModel;
 
 import static org.junit.Assert.assertEquals;

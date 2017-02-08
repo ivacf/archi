@@ -36,6 +36,7 @@ dependencies {
     compile dependencies.picasso
     compile dependencies.rxAndroid
     compile dependencies.circleImageView
+    compile project(':model')
 
     testCompile dependencies.jUnit
     testCompile dependencies.mockito

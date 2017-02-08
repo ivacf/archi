@@ -2,7 +2,7 @@ package uk.ivanc.archimvp.view;
 
 import java.util.List;
 
-import uk.ivanc.archimvp.model.Repository;
+import uk.ivanc.archi.model.Repository;
 
 public interface MainMvpView extends MvpView {
 

@@ -1,6 +1,6 @@
 package uk.ivanc.archimvp.view;
 
-import uk.ivanc.archimvp.model.User;
+import uk.ivanc.archi.model.User;
 
 public interface RepositoryMvpView extends MvpView {
 

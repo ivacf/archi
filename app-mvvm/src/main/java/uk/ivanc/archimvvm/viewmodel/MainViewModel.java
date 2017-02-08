@@ -17,10 +17,10 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.ArchiApplication;
 import uk.ivanc.archimvvm.R;
-import uk.ivanc.archimvvm.model.GithubService;
-import uk.ivanc.archimvvm.model.Repository;
 
 /**
  * View model for the MainActivity
