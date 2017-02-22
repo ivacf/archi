@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import uk.ivanc.archi.model.Repository;
+import uk.ivanc.archi.model.User;
 import uk.ivanc.archimvp.R;
-import uk.ivanc.archimvp.model.Repository;
-import uk.ivanc.archimvp.model.User;
 import uk.ivanc.archimvp.presenter.RepositoryPresenter;
 
 public class RepositoryActivity extends AppCompatActivity implements RepositoryMvpView {

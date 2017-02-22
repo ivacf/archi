@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import uk.ivanc.archimvvm.model.Repository;
-import uk.ivanc.archimvvm.model.User;
+import uk.ivanc.archi.model.Repository;
+import uk.ivanc.archi.model.User;
 
 public class MockModelFabric {
 

@@ -5,7 +5,7 @@ import android.content.Context;
 
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
-import uk.ivanc.archimvvm.model.GithubService;
+import uk.ivanc.archi.model.GithubService;
 
 public class ArchiApplication extends Application {
 

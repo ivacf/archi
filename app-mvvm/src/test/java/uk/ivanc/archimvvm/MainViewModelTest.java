@@ -19,8 +19,8 @@ import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.schedulers.Schedulers;
-import uk.ivanc.archimvvm.model.GithubService;
-import uk.ivanc.archimvvm.model.Repository;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.util.MockModelFabric;
 import uk.ivanc.archimvvm.viewmodel.MainViewModel;
 

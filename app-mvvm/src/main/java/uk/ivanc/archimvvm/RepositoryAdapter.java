@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.databinding.ItemRepoBinding;
-import uk.ivanc.archimvvm.model.Repository;
 import uk.ivanc.archimvvm.viewmodel.ItemRepoViewModel;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryViewHolder> {

@@ -13,11 +13,11 @@ import com.squareup.picasso.Picasso;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.Repository;
+import uk.ivanc.archi.model.User;
 import uk.ivanc.archimvvm.ArchiApplication;
 import uk.ivanc.archimvvm.R;
-import uk.ivanc.archimvvm.model.GithubService;
-import uk.ivanc.archimvvm.model.Repository;
-import uk.ivanc.archimvvm.model.User;
 
 /**
  * ViewModel for the RepositoryActivity

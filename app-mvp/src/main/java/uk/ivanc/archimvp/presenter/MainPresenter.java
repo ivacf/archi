@@ -8,10 +8,10 @@ import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvp.ArchiApplication;
 import uk.ivanc.archimvp.R;
-import uk.ivanc.archimvp.model.GithubService;
-import uk.ivanc.archimvp.model.Repository;
 import uk.ivanc.archimvp.view.MainMvpView;
 
 public class MainPresenter implements Presenter<MainMvpView> {

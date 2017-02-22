@@ -5,9 +5,9 @@ import android.util.Log;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import uk.ivanc.archi.model.GithubService;
+import uk.ivanc.archi.model.User;
 import uk.ivanc.archimvp.ArchiApplication;
-import uk.ivanc.archimvp.model.GithubService;
-import uk.ivanc.archimvp.model.User;
 import uk.ivanc.archimvp.view.RepositoryMvpView;
 
 public class RepositoryPresenter implements Presenter<RepositoryMvpView> {

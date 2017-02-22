@@ -4,8 +4,8 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.view.View;
 
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.R;
-import uk.ivanc.archimvvm.model.Repository;
 import uk.ivanc.archimvvm.view.RepositoryActivity;
 
 /**

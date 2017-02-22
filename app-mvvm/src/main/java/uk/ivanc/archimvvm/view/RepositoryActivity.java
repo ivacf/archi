@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.R;
 import uk.ivanc.archimvvm.databinding.RepositoryActivityBinding;
-import uk.ivanc.archimvvm.model.Repository;
 import uk.ivanc.archimvvm.viewmodel.RepositoryViewModel;
 
 public class RepositoryActivity extends AppCompatActivity {

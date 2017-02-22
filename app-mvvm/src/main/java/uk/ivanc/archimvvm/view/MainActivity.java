@@ -10,10 +10,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
 
+import uk.ivanc.archi.model.Repository;
 import uk.ivanc.archimvvm.R;
 import uk.ivanc.archimvvm.RepositoryAdapter;
 import uk.ivanc.archimvvm.databinding.MainActivityBinding;
-import uk.ivanc.archimvvm.model.Repository;
 import uk.ivanc.archimvvm.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements MainViewModel.DataListener {
