@@ -12,6 +12,7 @@ class ArchiApplication : Application() {
     //For setting mocks during testing
     val githubService: GithubService by lazy { GithubService.create() }
     val defaultSubscribeScheduler: Scheduler by lazy { Schedulers.io() }
+    val viewModelFactory: ViewModelFactory by lazy { ViewModelFactory(githubService) }
 
     companion object {
 

@@ -1,19 +1,23 @@
 ext {
-    supportLibraryVersion = '25.3.0'
+    supportLibraryVersion = '25.3.1'
     retrofitVersion = '2.3.0'
+    archComponentsVersion = '1.0.+'
 
     dependencies = [
-            appCompat: "com.android.support:appcompat-v7:$supportLibraryVersion",
-            cardView: "com.android.support:cardview-v7:$supportLibraryVersion",
-            recyclerView: "com.android.support:recyclerview-v7:$supportLibraryVersion",
-            retrofit: "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            retrofitConverterGson: "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            retrofitAdapterRxJava: "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
-            picasso: 'com.squareup.picasso:picasso:2.5.2',
-            rxAndroid: 'io.reactivex:rxandroid:1.2.1',
-            circleImageView: 'de.hdodenhof:circleimageview:2.1.0',
-            jUnit: 'junit:junit:4.12',
-            mockito: 'org.mockito:mockito-core:1.10.19',
-            robolectric: 'org.robolectric:robolectric:3.0'
+            appCompat             : "com.android.support:appcompat-v7:$supportLibraryVersion",
+            cardView              : "com.android.support:cardview-v7:$supportLibraryVersion",
+            recyclerView          : "com.android.support:recyclerview-v7:$supportLibraryVersion",
+            retrofit              : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitConverterGson : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            retrofitAdapterRxJava : "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
+            picasso               : 'com.squareup.picasso:picasso:2.5.2',
+            rxAndroid             : 'io.reactivex:rxandroid:1.2.1',
+            archComponentsRuntime : "android.arch.lifecycle:runtime:$archComponentsVersion",
+            archComponentsExt     : "android.arch.lifecycle:extensions:$archComponentsVersion",
+            archComponentsCompiler: "android.arch.lifecycle:compiler:$archComponentsVersion",
+            circleImageView       : 'de.hdodenhof:circleimageview:2.1.0',
+            jUnit                 : 'junit:junit:4.12',
+            mockito               : 'org.mockito:mockito-core:1.10.19',
+            robolectric           : 'org.robolectric:robolectric:3.0'
     ]
 }

@@ -62,7 +62,7 @@ class RepositoryActivity : AppCompatActivity() {
 
 
     private fun loadFullUser(url: String) {
-        val application = ArchiApplication[this]
+       /* val application = ArchiApplication[this]
         val githubService = application.githubService
         subscription = githubService.userFromUrl(url)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,7 +71,7 @@ class RepositoryActivity : AppCompatActivity() {
                     Log.i(TAG, "Full user data loaded " + user)
                     bindOwnerData(user)
                     ownerLayout.visibility = View.VISIBLE
-                }
+                }*/
     }
 
     companion object {

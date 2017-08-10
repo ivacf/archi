@@ -1,5 +1,7 @@
 package uk.ivanc.archi2017
 
+import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,21 +14,23 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-import retrofit2.adapter.rxjava.HttpException
-import rx.Subscriber
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
 import uk.ivanc.archi.R
 import uk.ivanc.archi2017.model.Repository
+import android.arch.lifecycle.ViewModelProviders
 
-class MainActivity : AppCompatActivity() {
 
-    private var subscription: Subscription? = null
+class MainActivity : LifecycleActivity() {
+
+    private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        //setActionBar(toolbar) TODO
+
+        viewModel = ViewModelProviders
+                .of(this, ArchiApplication[this].viewModelFactory)
+                .get(MainActivityViewModel::class.java)
 
         reposRecycleView.setHasFixedSize(true)
         reposRecycleView.layoutManager = LinearLayoutManager(this)
@@ -50,52 +54,53 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (subscription != null) {
-            subscription!!.unsubscribe()
-        }
-    }
-
     fun loadGithubRepos(username: String) {
         progressBar.visibility = View.VISIBLE
         reposRecycleView.visibility = View.GONE
         infoTextView.visibility = View.GONE
-        val application = ArchiApplication[this]
-        subscription = application.githubService.publicRepositories(username)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(application.defaultSubscribeScheduler)
-                .subscribe(object : Subscriber<List<Repository>>() {
-                    override fun onCompleted() {
-                        progressBar.visibility = View.GONE
-                        if (reposRecycleView.adapter.itemCount > 0) {
-                            reposRecycleView.requestFocus()
-                            hideSoftKeyboard()
-                            reposRecycleView.visibility = View.VISIBLE
-                        } else {
-                            infoTextView.setText(R.string.text_empty_repos)
-                            infoTextView.visibility = View.VISIBLE
-                        }
-                    }
+        viewModel.getPublicRepositories(username)
+                .observe(this, Observer<List<Repository>> { repositories ->
+                    val adapter = reposRecycleView.adapter as RepositoryAdapter
+                    adapter.repositories = repositories ?: emptyList()
+                    adapter.notifyDataSetChanged()
 
-                    override fun onError(error: Throwable) {
-                        Log.e(TAG, "Error loading GitHub repos ", error)
-                        progressBar.visibility = View.GONE
-                        if (error is HttpException && error.code() == 404) {
-                            infoTextView.setText(R.string.error_username_not_found)
-                        } else {
-                            infoTextView.setText(R.string.error_loading_repos)
-                        }
+                    progressBar.visibility = View.GONE
+                    if (reposRecycleView.adapter.itemCount > 0) {
+                        reposRecycleView.requestFocus()
+                        hideSoftKeyboard()
+                        reposRecycleView.visibility = View.VISIBLE
+                    } else {
+                        infoTextView.setText(R.string.text_empty_repos)
                         infoTextView.visibility = View.VISIBLE
                     }
-
-                    override fun onNext(repositories: List<Repository>) {
-                        Log.i(TAG, "Repos loaded " + repositories)
-                        val adapter = reposRecycleView.adapter as RepositoryAdapter
-                        adapter.repositories = repositories
-                        adapter.notifyDataSetChanged()
-                    }
                 })
+        // TODO error handling
+        /*subscription = application.githubService.publicRepositories(username)
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribeOn(application.defaultSubscribeScheduler)
+                 .subscribe(object : Subscriber<List<Repository>>() {
+                     override fun onCompleted() {
+
+                     }
+
+                     override fun onError(error: Throwable) {
+                         Log.e(TAG, "Error loading GitHub repos ", error)
+                         progressBar.visibility = View.GONE
+                         if (error is HttpException && error.code() == 404) {
+                             infoTextView.setText(R.string.error_username_not_found)
+                         } else {
+                             infoTextView.setText(R.string.error_loading_repos)
+                         }
+                         infoTextView.visibility = View.VISIBLE
+                     }
+
+                     override fun onNext(repositories: List<Repository>) {
+                         Log.i(TAG, "Repos loaded " + repositories)
+                         val adapter = reposRecycleView.adapter as RepositoryAdapter
+                         adapter.repositories = repositories
+                         adapter.notifyDataSetChanged()
+                     }
+                 })*/
     }
 
     private fun hideSoftKeyboard() {
