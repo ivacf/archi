@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
-    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "uk.ivanc.archi"
@@ -22,13 +21,13 @@ android {
 dependencies {
     Map<String, String> dependencies = rootProject.ext.dependencies;
 
-    compile dependencies.appCompat
-    compile dependencies.cardView
-    compile dependencies.recyclerView
-    compile dependencies.retrofit
-    compile dependencies.retrofitConverterGson
-    compile dependencies.retrofitAdapterRxJava
-    compile dependencies.picasso
-    compile dependencies.rxAndroid
-    compile dependencies.circleImageView
+    implementation dependencies.appCompat
+    implementation dependencies.cardView
+    implementation dependencies.recyclerView
+    implementation dependencies.retrofit
+    implementation dependencies.retrofitConverterGson
+    implementation dependencies.retrofitAdapterRxJava
+    implementation dependencies.picasso
+    implementation dependencies.rxAndroid
+    implementation dependencies.circleImageView
 }
